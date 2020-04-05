@@ -48,7 +48,7 @@ class MQTTManager {
         .withWillMessage('My Will message')
         .startClean() // Non persistent session for testing
         .withWillQos(MqttQos.atLeastOnce);
-    print('EXAMPLE::Mosquitto client connecting....');
+    print('Mosquitto client connecting....');
     _client.connectionMessage = connMess;
   }
 
@@ -60,14 +60,14 @@ class MQTTManager {
   void connect() async {
     assert(_client != null);
     try {
-      print('EXAMPLE::Mosquitto start client connecting....');
+      print('Mosquitto start client connecting....');
       _currentState.setAppConnectionState(MQTTAppConnectionState.connecting);
       if (_user != null && _password != null)
         await _client.connect(_user, _password);
       else
         await _client.connect();
     } on Exception catch (e) {
-      print('EXAMPLE::client exception - $e');
+      print('client exception - $e');
       disconnect();
     }
   }
@@ -85,15 +85,15 @@ class MQTTManager {
 
   /// The subscribed callback
   void onSubscribed(String topic) {
-    print('EXAMPLE::Subscription confirmed for topic $topic');
+    print('Subscription confirmed for topic $topic');
   }
 
   /// The unsolicited disconnect callback
   void onDisconnected() {
-    print('EXAMPLE::OnDisconnected client callback - Client disconnection');
+    print('OnDisconnected client callback - Client disconnection');
     if (_client.connectionStatus.returnCode ==
         MqttConnectReturnCode.solicited) {
-      print('EXAMPLE::OnDisconnected callback is solicited, this is correct');
+      print('OnDisconnected callback is solicited, this is correct');
     }
     _currentState.setAppConnectionState(MQTTAppConnectionState.disconnected);
   }
@@ -101,7 +101,7 @@ class MQTTManager {
   /// The successful connect callback
   void onConnected() {
     _currentState.setAppConnectionState(MQTTAppConnectionState.connected);
-    print('EXAMPLE::Mosquitto client connected....');
+    print('Mosquitto client connected....');
     _client.subscribe(_topic, MqttQos.atLeastOnce);
     _client.updates.listen((List<MqttReceivedMessage<MqttMessage>> c) {
       final MqttPublishMessage recMess = c[0].payload;
@@ -115,10 +115,11 @@ class MQTTManager {
       /// for a while.
       /// The payload is a byte buffer, this will be specific to the topic
       print(
-          'EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
+          'Change notification:: topic is <${c[0]
+              .topic}>, payload is <-- $pt -->');
       print('');
     });
     print(
-        'EXAMPLE::OnConnected client callback - Client connection was sucessful');
+        'OnConnected client callback - Client connection was sucessful');
   }
 }

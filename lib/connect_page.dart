@@ -2,7 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:roboremote/controll_page.dart';
+import 'package:roboremote/control_page.dart';
 
 import 'mqtt/MQTTManager.dart';
 import 'mqtt/state/MQTTAppState.dart';
@@ -35,13 +35,6 @@ class _ConnectState extends State<Connect> {
   @override
   void initState() {
     super.initState();
-
-    /*
-    _hostTextController.addListener(_printLatestValue);
-    _messageTextController.addListener(_printLatestValue);
-    _topicTextController.addListener(_printLatestValue);
-
-     */
   }
 
   @override
@@ -54,15 +47,6 @@ class _ConnectState extends State<Connect> {
     _passwordTextController.dispose();
     super.dispose();
   }
-
-  /*
-  _printLatestValue() {
-    print("Second text field: ${_hostTextController.text}");
-    print("Second text field: ${_messageTextController.text}");
-    print("Second text field: ${_topicTextController.text}");
-  }
-
-   */
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +102,7 @@ class _ConnectState extends State<Connect> {
           _buildPublishMessageRow(),
           const SizedBox(height: 10),
           _buildConnectedButtonFrom(currentAppState.getAppConnectionState),
-          _builControllButtonFrom(currentAppState.getAppConnectionState)
+          _builControlButtonFrom(currentAppState.getAppConnectionState)
         ],
       ),
     );
@@ -242,7 +226,7 @@ class _ConnectState extends State<Connect> {
     );
   }
 
-  Widget _builControllButtonFrom(MQTTAppConnectionState state) {
+  Widget _builControlButtonFrom(MQTTAppConnectionState state) {
     return RaisedButton(
       color: Colors.green,
       child: const Text('Controll'),
